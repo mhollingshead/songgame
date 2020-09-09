@@ -150,11 +150,11 @@ function createDownloadLink(blob) {
 	upload.addEventListener("click", function(event){
 		  var xhr=new XMLHttpRequest();
 		  xhr.onload=function(e) {
-		      console.log(xhr.readyState);
 		      if(this.readyState === 4) {
 		          console.log("Server returned: ",e.target.responseText);
 		      }
 		  };
+		  console.log(xhr.readyState);
 		  var fd=new FormData();
 		  fd.append("audio_data",blob, filename);
 		  xhr.open("POST","upload.php",true);
