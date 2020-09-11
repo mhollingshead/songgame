@@ -11,11 +11,22 @@ function transition() {
   slide1.classList.add("out");
   slide2.classList.remove("hidden");
   slide2.classList.add("in");
+  changeTitles();
 
   setTimeout(function(){
     slide1.classList.add("hidden");
     slide1.classList.remove("out");
   }, 2000);
+}
+
+function changeTitles() {
+  document.getElementById("songTitle").innerHTML = song_result.title;
+  document.getElementById("songArtist").innerHTML = song_result.artist;
+  document.getElementById("songTitle1").innerHTML = song_result.title;
+  document.getElementById("songArtist1").innerHTML = song_result.artist;
+  document.getElementById("songTitle2").innerHTML = song_result.title;
+  document.getElementById("songArtist2").innerHTML = song_result.artist;
+  
 }
 
 /* Insure both Title and Artist inputs have values */
