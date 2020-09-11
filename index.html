@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <div id="slide1">
+      <div id="logo">
+        s<img src="https://img.icons8.com/ios-filled/2x/burn-cd.png" height="32px" style="filter: invert(100%); margin-bottom: -2px;"/>nggame
+      </div>
+      <div id="song_opts" style="margin-top: 50px; padding-bottom: 30px;">
+        <div style="font-size: 18px; margin-bottom: 20px;">
+          <b>Search Songs:</b>
+        </div>
+        <input type="text" id="title" placeholder="Title" onkeyup="checkForStart()" autocomplete="off"/>
+        <span style="color: #ff4060;">*</span>
+        <input type="text" id="artist" placeholder="Artist" onkeyup="checkForStart()" autocomplete="off" style="margin-top: 20px;"/>
+        <span style="color: #ff4060;">*</span>
+        <div id="error1">
+          <i>Song not found, try again!</i>
+        </div>
+        <div align="center" style="opacity: 0.6; font-weight: 200; font-size: 14px; margin-top: 20px;">
+          <i>Make sure both the title and artist are spelled correctly!</i>
+        </div>
+      </div>
+      <div onclick="scrapeLyrics()" id="start_button" class="noclick">START GAME</div>
+    </div>
+
+    <div id="slide2" class="hidden">
+      <div id="songTitle"></div>
+      <div id="songArtist"></div>
+      <div id="difficulty_opts">
+        <b>Select Difficulty:</b>
+        <div align="center" style="margin-top: 20px; margin-bottom: 10px;">
+          <img onclick="changeDifficulty(0)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug" />
+          <img onclick="changeDifficulty(1)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug" />
+          <img onclick="changeDifficulty(2)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+          <img onclick="changeDifficulty(3)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+          <img onclick="changeDifficulty(4)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+        </div>
+        <div id="sips" style="margin-bottom: 20px;"></div>
+        <b>Select Letter:</b>
+        <div align="center" id="letters" style="margin-top: 20px; margin-bottom: 10px;"></div>
+        <div id="error" style="color: #ff4060; display: none;" align="center">
+          <i>Select a letter to play!</i>
+        </div>
+      </div>
+      <div id="start_song_button" onclick="playGame()">PLAY</div>
+    </div>
+
+    <div id="slide3" class="hidden">
+      <div id="songTitle1"></div>
+      <div id="songArtist1"></div>
+      <button id="sip_button" onclick="sip()">
+        <img src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="75px" />
+      </button>
+      <div id="game_info" style="margin-top: 50px;">
+        Tap the button & drink when you hear the letter <div style="display: inline-block; background: #f2f2f2; border-radius: 10px; padding: 10px; font-weight: 800;" id="letter_disp"></div>
+        <div style="margin-top: 10px; margin-bottom: 20px; height: 1px; background: #f2f2f2;"></div>
+        <b style="font-size: 25px;">You've taken: <span id="sip_count">0</span> <span id="grammar">sips</span>.</b>
+      </div>
+      <div id="end_song_button" onclick="endGame()">END ROUND</div>
+    </div>
+
+    <div id="slide4" class="hidden">
+      <div id="songTitle2"></div>
+      <div id="songArtist2"></div>
+      <div id="end_info">
+        <b style="font-size: 25px; margin-bottom: 20px;">Your score:</b>
+        <div id="your_score"></div>
+        <div style="margin-top: 20px; margin-bottom: 20px; height: 1px; background: #f2f2f2;"></div>
+        You were <span id="percent_off" style="font-weight: 600"></span> off. You took <span id="sipped" style="font-weight: 600"></span> out of <span id="real_sips" style="font-weight: 600"></span> sips.
+      </div>
+      <div id="new_game_button" onclick="location.reload()">PLAY AGAIN</div>
+    </div>
+  </div>
+
+  <script src="js/game_logic.js"></script>
+  <script src="js/helpers.js"></script>
+  <script src="js/scrape.js"></script>
+</body>
+</html>
