@@ -3,7 +3,7 @@ var tit = [];
 var art = [];
 
 /* Scrape html from lyric page */
-var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+var cors_api_url = 'http://alloworigin.com/get?url=';
 
 function doCORSRequest(options) {
   var x = new XMLHttpRequest();
@@ -17,27 +17,30 @@ function doCORSRequest(options) {
 }
 
 function scrapeLyrics() {
-    var title = document.getElementById("title").value.replaceAll(" ", "-").toLowerCase();
-    var artist = document.getElementById("artist").value.replaceAll(" ", "-").toLowerCase();
-    var urlField = 'https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html';
+  var title = document.getElementById("title").value.replaceAll(" ", "-").toLowerCase();
+  var artist = document.getElementById("artist").value.replaceAll(" ", "-").toLowerCase();
+  var urlField = 'https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html';
 
-    console.log(urlField);
-
-    if (document.getElementById("start_button").classList.contains("noclick")) {
-      return;
-    }
-
-    doCORSRequest({
-      method: 'GET',
-      url: urlField,
-    });
+  if (document.getElementById("start_button").classList.contains("noclick")) {
+    return;
   }
+
+  /*doCORSRequest({
+    method: 'GET',
+    url: urlField,
+  });*/
+  $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(urlField), function (data) {
+    formatLyrics(data.contents);
+  });
+}
 
 /* Take the lyric text from the html and get official Title & Artist */
 function formatLyrics(data) {
   var lyrics = [];
   var error = false;
   data_obj = data;
+  art = [];
+  tit = [];
 
   for (var i = 0; i < data_obj.length; i++) {
     // Scrape lyrics
@@ -57,6 +60,11 @@ function formatLyrics(data) {
       while (!checkPhrase(i, ' - ')) {
         art.push(data_obj[i]);
         i++;
+        if (checkPhrase(i, '</h1>')) {
+          document.getElementById("error1").style.display = "block";
+          error = true;
+          break;
+        }
       }
       i += 3;
       //Scrape song
@@ -77,6 +85,12 @@ function formatLyrics(data) {
   /* Build song object and start the game cycle */
   var lyr = "";
   for (var k = 0; k < lyrics.length; k++) {
+    if (lyrics[k] === "[") {
+      while (lyrics[k] != "]") {
+        k++;
+      }
+      k++;
+    }
     lyr += lyrics[k];
   }
   var tits = "";
