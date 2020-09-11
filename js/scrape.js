@@ -3,18 +3,35 @@ var tit = [];
 var art = [];
 
 /* Scrape html from lyric page */
-function scrapeLyrics() {
-  if (document.getElementById("start_button").classList.contains("noclick")) {
-    return;
-  }
+var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 
-  var title = document.getElementById("title").value.replaceAll(" ", "-").toLowerCase();
-  var artist = document.getElementById("artist").value.replaceAll(" ", "-").toLowerCase();
+function doCORSRequest(options) {
+  var x = new XMLHttpRequest();
 
-  $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent('https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html') + '&callback=?', function(data){
-    formatLyrics(data.contents);
-  });
+  x.open(options.method, cors_api_url + options.url);
+  x.send();
+
+  x.onload = x.onerror = function() {
+    formatLyrics(x.responseText);
+  };
 }
+
+function scrapeLyrics() {
+    var title = document.getElementById("title").value.replaceAll(" ", "-").toLowerCase();
+    var artist = document.getElementById("artist").value.replaceAll(" ", "-").toLowerCase();
+    var urlField = 'https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html';
+
+    console.log(urlField);
+
+    if (document.getElementById("start_button").classList.contains("noclick")) {
+      return;
+    }
+
+    doCORSRequest({
+      method: 'GET',
+      url: urlField,
+    });
+  }
 
 /* Take the lyric text from the html and get official Title & Artist */
 function formatLyrics(data) {
