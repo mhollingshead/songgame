@@ -147,6 +147,7 @@ img {
   margin: auto;
   width: 500px;
   left: calc(50% - 250px);
+  top: 0;
 }
 #sips {
   font-style: italic;
@@ -198,16 +199,20 @@ img {
 @keyframes out {
   0% {
     left: calc(50% - 250px);
+    top: 0;
   }
   100% {
-    left: -100%;
+    left: -200%;
+    top: 0;
   }
 }
 @keyframes in {
   0% {
-    right: -100%;
+    right: -200%;
+    top: 0;
   }
   100% {
     right: calc(50% - 250px);
+    top: 0;
   }
 }
