@@ -11,7 +11,7 @@ function scrapeLyrics() {
   var title = document.getElementById("title").value.replaceAll(" ", "-").toLowerCase();
   var artist = document.getElementById("artist").value.replaceAll(" ", "-").toLowerCase();
 
-  $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html') + '&callback=?', function(data){
+  $.getJSON('https://www.whateverorigin.org/get?url=' + encodeURIComponent('https://www.metrolyrics.com/' + title + '-lyrics-' + artist + '.html') + '&callback=?', function(data){
     formatLyrics(data.contents);
   });
 }
